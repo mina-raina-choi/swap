@@ -1,3 +1,31 @@
-<h1>Swap Coin</h1>
-
+<h1>Swap Coin By Changelly</h1>
+<br>
 <button (click)="getCurrencies()">getCurrencies</button>
+
+<br>
+<br>
+<h2>Changelly에서 스왑제공하는 코인들</h2>
+<ul>
+  <li *ngFor="let currency of currencies">{{currency}}</li>
+</ul>
+
+<br>
+<br>
+<h2>스왑요청하기(아직미완)</h2>
+<h5>from</h5>
+<input type="text">
+<select><option *ngFor="let currency of currencies">{{currency}}</option></select>
+
+<h5>to</h5>
+<input type="text">
+<select><option *ngFor="let currency of currencies">{{currency}}</option></select>
+
+
+<br>
+<br>
+<h2>스왑결과 확인</h2>
+<h3>스왑 id를 입력하세요</h3>
+<input type="text" placeholder="스왑 id" [(ngModel)]="swapId">
+<button (click)="getStatus()">스왑상태보기</button>
+<p *ngIf="errorMsg">{{errorMsg}}</p>
+<p *ngIf="swapStatus">{{swapStatus}}</p>

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { SwapService } from './swap.service';
@@ -9,7 +10,8 @@ import { SwapService } from './swap.service';
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [SwapService],
   bootstrap: [AppComponent]
