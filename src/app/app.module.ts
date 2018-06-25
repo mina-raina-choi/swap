@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { SwapService } from './swap.service';
+import {SuiModule} from 'ng2-semantic-ui';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { SwapService } from './swap.service';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    SuiModule
   ],
   providers: [SwapService],
   bootstrap: [AppComponent]

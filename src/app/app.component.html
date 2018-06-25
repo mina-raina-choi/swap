@@ -1,41 +1,112 @@
-<h1>Swap Coin By Changelly</h1>
-<br>
-<button (click)="getCurrencies()">getCurrencies</button>
+<div class="ui raised very padded text container segment">
+  <h2 class="ui header">Swap Coin By Changelly</h2>
+  <h2 class="ui header">스왑 요청</h2>
+  <h5>From</h5>
 
-<br>
-<br>
-<h2>스왑요청하기(아직미완)</h2>
-<h5>from</h5>
-<input type="text" [(ngModel)]="fromValue" (ngModelChange)="onfromCoinChange($event)">
-<select [(ngModel)]="fromCoin">
-  <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
-</select>
+  <div class="ui form">
+    <div class="fields">
+      <div class="ten wide field">
+        <label>스왑 요청 수량</label>
+        <input type="text" placeholder="스왑 요청 수량" [(ngModel)]="fromValue" (ngModelChange)="onfromCoinChange($event)">
+      </div>
+      <div class="six wide field">
+        <label>Currency</label>
+        <select [(ngModel)]="fromCoin">
+          <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
 
-<h5>to</h5>
-<input type="text" [(ngModel)]="toValue">
-<select [(ngModel)]="toCoin">
-  <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
-</select>
+  <h5>To</h5>
+  <div class="ui form">
+    <div class="fields">
+      <div class="ten wide field">
+        <label>스왑 후 받을 수량</label>
+        <input type="text" placeholder="스왑 후 받을 수량" [(ngModel)]="toValue" readonly>
+      </div>
+      <div class="six wide field">
+        <label>Currency</label>
+        <select [(ngModel)]="toCoin">
+          <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
 
+  <div class="ui form">
+    <div class="required field">
+      <h5>스왑된 {{ toCoin }}을 받을 주소를 입력하세요</h5>
+      <input type="text" placeholder="Address" [(ngModel)]="toAddr">
+    </div>
+  </div>
 
-<h5>스왑된 {{ toCoin }}을 받을 주소를 입력하세요</h5>
-<input type="text" [(ngModel)]="toAddr">
+  <h3>최종 스왑 정보</h3>
 
-<button (click)="createSwap()">스왑실행</button>
+  <div class="ui segments">
+      <div class="ui segment">
+        <p>스왑 코인 수량 : ~~~</p>
+      </div>
+      <div class="ui segment">
+        <p>받을 코인 수량(추정) : ~~~</p>
+      </div>
+      <div class="ui segment">
+        <p>수취인 주소 : {{toAddr}}</p>
+      </div>
+      <div class="ui segment">
+        <p>환율 : ~~</p>
+      </div>
+      <div class="ui segment">
+        <p>스왑 수수료 : ~~</p>
+      </div>
+    </div>
+  <div class="ui form">
+    <div class="fields">
+      <div class="field">
+        <label>스왑 코인 수량</label>
+        <p>ㅇㅇㅇ</p>
+      </div>
+      <div class="field">
+        <label>받을 코인 수량(추정)</label>
+        <p>ㅇㅇㅇ</p>
+      </div>
+      <div class="field">
+        <label>수취인 주소</label>
+        <p>{{toAddr}}</p>
+      </div>
+      <div class="field">
+        <label>환율</label>
+        <p>11</p>
+      </div>
+      <div class="field">
+        <label>스왑 수수료</label>
+        <p>ㅇㅇㅇ</p>
+      </div>
+    </div>
+  </div>
+  <button class="ui inverted primary button" (click)="createSwap()">스왑실행</button>
 
-<br>
-<br>
-<h2>스왑결과 확인</h2>
-<h3>스왑 id를 입력하세요</h3>
-<input type="text" placeholder="스왑 id" [(ngModel)]="swapId">
-<button (click)="getStatus()">스왑상태보기</button>
-<p *ngIf="errorMsg">{{errorMsg}}</p>
-<p *ngIf="swapStatus">{{swapStatus}}</p>
+  <h2 class="ui header">스왑결과 확인</h2>
+  <div class="ui form error success">
+    <div class="required field">
+      <label>스왑 id를 입력하세요</label>
+      <input type="text" placeholder="swap id" [(ngModel)]="swapId">
+    </div>
+    <button class="ui inverted primary button" (click)="getStatus()">스왑상태보기</button>
+    <div *ngIf="swapStatus" class="ui success message">
+      <div class="header">Success</div>
+      <p>{{swapStatus}}</p>
+    </div>
+    <div *ngIf="errorMsg" class="ui error message">
+      <div class="header">Error</div>
+      <p>{{errorMsg}}</p>
+    </div>
+  </div>
 
+  <h2 class="ui header">Changelly에서 스왑제공하는 코인들</h2>
 
-<br>
-<br>
-<h2>Changelly에서 스왑제공하는 코인들</h2>
-<ul>
-  <li *ngFor="let currency of currencies">{{currency}}</li>
-</ul>
+  <ul>
+    <li *ngFor="let currency of currencies">{{currency}}</li>
+  </ul>
+
+</div>
