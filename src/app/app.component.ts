@@ -14,6 +14,8 @@ import { Subject } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
   fromCoinChanged: Subject<number> = new Subject<number>();
 
+  step: number = 1;
+
   currencies: any[];
   swapId: string;
   swapStatus: string;
@@ -34,6 +36,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.fromCoinChanged.unsubscribe()
+  }
+
+  tabClicked(step) {
+    this.step = step
   }
 
   async getCurrencies() {

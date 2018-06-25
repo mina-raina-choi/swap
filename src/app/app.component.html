@@ -1,49 +1,58 @@
 <div class="ui raised very padded text container segment">
   <h2 class="ui header">Swap Coin By Changelly</h2>
-  <h2 class="ui header">스왑 요청</h2>
-  <h5>From</h5>
-
-  <div class="ui form">
-    <div class="fields">
-      <div class="ten wide field">
-        <label>스왑 요청 수량</label>
-        <input type="text" placeholder="스왑 요청 수량" [(ngModel)]="fromValue" (ngModelChange)="onfromCoinChange($event)">
-      </div>
-      <div class="six wide field">
-        <label>Currency</label>
-        <select [(ngModel)]="fromCoin">
-          <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
-        </select>
-      </div>
-    </div>
+  <div class="ui tabular menu">
+    <a class="item" [class.active]="step===1" (click)="tabClicked(1)">
+      스왑 요청
+    </a>
+    <a class="item" [class.active]="step===2" (click)="tabClicked(2)">
+      스왑 상태 확인
+    </a>
   </div>
 
-  <h5>To</h5>
-  <div class="ui form">
-    <div class="fields">
-      <div class="ten wide field">
-        <label>스왑 후 받을 수량</label>
-        <input type="text" placeholder="스왑 후 받을 수량" [(ngModel)]="toValue" readonly>
-      </div>
-      <div class="six wide field">
-        <label>Currency</label>
-        <select [(ngModel)]="toCoin">
-          <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
-        </select>
+  <ng-container *ngIf="step === 1">
+    <h2 class="ui header">스왑 요청</h2>
+    <h5>From</h5>
+    <div class="ui form">
+      <div class="fields">
+        <div class="ten wide field">
+          <label>스왑 요청 수량</label>
+          <input type="text" placeholder="스왑 요청 수량" [(ngModel)]="fromValue" (ngModelChange)="onfromCoinChange($event)">
+        </div>
+        <div class="six wide field">
+          <label>Currency</label>
+          <select [(ngModel)]="fromCoin">
+            <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
+          </select>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="ui form">
-    <div class="required field">
-      <h5>스왑된 {{ toCoin }}을 받을 주소를 입력하세요</h5>
-      <input type="text" placeholder="Address" [(ngModel)]="toAddr">
+    <h5>To</h5>
+    <div class="ui form">
+      <div class="fields">
+        <div class="ten wide field">
+          <label>스왑 후 받을 수량</label>
+          <input type="text" placeholder="스왑 후 받을 수량" [(ngModel)]="toValue" readonly>
+        </div>
+        <div class="six wide field">
+          <label>Currency</label>
+          <select [(ngModel)]="toCoin">
+            <option *ngFor="let currency of currencies" [ngValue]="currency">{{currency}}</option>
+          </select>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <h3>최종 스왑 정보</h3>
+    <div class="ui form">
+      <div class="required field">
+        <h5>스왑된 {{ toCoin }}을 받을 주소를 입력하세요</h5>
+        <input type="text" placeholder="Address" [(ngModel)]="toAddr">
+      </div>
+    </div>
 
-  <div class="ui segments">
+    <h3>최종 스왑 정보</h3>
+
+    <div class="ui segments">
       <div class="ui segment">
         <p>스왑 코인 수량 : ~~~</p>
       </div>
@@ -60,53 +69,24 @@
         <p>스왑 수수료 : ~~</p>
       </div>
     </div>
-  <div class="ui form">
-    <div class="fields">
-      <div class="field">
-        <label>스왑 코인 수량</label>
-        <p>ㅇㅇㅇ</p>
+    <button class="ui inverted primary button fluid" (click)="createSwap()">스왑실행</button>
+  </ng-container>
+  <ng-container *ngIf="step === 2">
+    <h2 class="ui header">스왑 상태 확인</h2>
+    <div class="ui form error success">
+      <div class="required field">
+        <label>스왑 id를 입력하세요</label>
+        <input type="text" placeholder="swap id" [(ngModel)]="swapId">
       </div>
-      <div class="field">
-        <label>받을 코인 수량(추정)</label>
-        <p>ㅇㅇㅇ</p>
+      <button class="ui inverted primary button fluid" (click)="getStatus()">스왑상태보기</button>
+      <div *ngIf="swapStatus" class="ui success message">
+        <div class="header">Success</div>
+        <p>{{swapStatus}}</p>
       </div>
-      <div class="field">
-        <label>수취인 주소</label>
-        <p>{{toAddr}}</p>
-      </div>
-      <div class="field">
-        <label>환율</label>
-        <p>11</p>
-      </div>
-      <div class="field">
-        <label>스왑 수수료</label>
-        <p>ㅇㅇㅇ</p>
+      <div *ngIf="errorMsg" class="ui error message">
+        <div class="header">Error</div>
+        <p>{{errorMsg}}</p>
       </div>
     </div>
-  </div>
-  <button class="ui inverted primary button" (click)="createSwap()">스왑실행</button>
-
-  <h2 class="ui header">스왑결과 확인</h2>
-  <div class="ui form error success">
-    <div class="required field">
-      <label>스왑 id를 입력하세요</label>
-      <input type="text" placeholder="swap id" [(ngModel)]="swapId">
-    </div>
-    <button class="ui inverted primary button" (click)="getStatus()">스왑상태보기</button>
-    <div *ngIf="swapStatus" class="ui success message">
-      <div class="header">Success</div>
-      <p>{{swapStatus}}</p>
-    </div>
-    <div *ngIf="errorMsg" class="ui error message">
-      <div class="header">Error</div>
-      <p>{{errorMsg}}</p>
-    </div>
-  </div>
-
-  <h2 class="ui header">Changelly에서 스왑제공하는 코인들</h2>
-
-  <ul>
-    <li *ngFor="let currency of currencies">{{currency}}</li>
-  </ul>
-
+  </ng-container>
 </div>
